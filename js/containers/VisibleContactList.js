@@ -4,36 +4,36 @@
  */
 
 import { connect } from 'react-redux'
-import { toggleContact } from '../actions'
+import { getContacts, toggleContact } from '../actions'
 import ContactList from 'ContactList'
 
-const getVisibleContacts = (contacts, filter) => {
-  switch (filter) {
-    case 'SHOW_SELECTED':
-      return contacts.filter
-    case 'SHOW_ALL':
-    default:
-      return contacts
+const getVisibleContacts = (contacts, hideUnselected) => {
+  if (hideUnselected) {
+    return contacts.filter(contact => contact.isChecked)
+  } else {
+    return contacts
   }
 }
 
 const mapStateToProps = state => {
   return {
-    contacts: getVisibleContacts(state.todos, state.visibilityFilter)
+    contacts: getVisibleContacts(state.contacts, state.visibility.hideUnselected)
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
+    getContacts: () => {
+      dispatch(getContacts())
+    },
     onContactClick: id => {
       dispatch(toggleContact(id))
     }
   }
 }
 
-const VisibleContactList = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ContactList)
+const VisibleContactList = connect(mapStateToProps, mapDispatchToProps)(
+  ContactList
+)
 
 export default VisibleContactList

@@ -3,8 +3,12 @@
  */
 
 import { combineReducers } from 'redux'
-import * as contactReducers from './contact'
+import contacts from './contacts'
+import visibility from './visibility'
 
-const contactApp = combineReducers(contactReducers)
+const contactApp = combineReducers({
+  contacts,
+  visibility
+})
 
 export default contactApp

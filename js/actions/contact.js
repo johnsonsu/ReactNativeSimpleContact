@@ -3,9 +3,10 @@
  */
 
 import Contacts from 'react-native-contacts'
-import type { Contact } from '../reducers/contact'
+import type { Contact } from '../reducers/contacts'
 import type { Action, ThunkAction, Dispatch } from './actionTypes'
 import {
+  GET_CONTACTS,
   GET_CONTACTS_SUCCESS,
   TOGGLE_CHECKBOX,
   TOGGLE_VISIBILITY
@@ -13,6 +14,9 @@ import {
 
 export function getContacts(): ThunkAction {
   return (dispatch: Dispatch) => {
+    dispatch({
+      type: GET_CONTACTS
+    })
     Contacts.getAll((err, contacts) => {
       if (err === 'denied') {
         console.warn('contact access denied.')
@@ -30,13 +34,9 @@ function getContactsSuccess(contacts: Array<Contact>): Action {
   }
 }
 
-export function toggleContact(id: String) {
+export function toggleContact(id: String): Action {
   return {
     type: TOGGLE_CHECKBOX,
     id
   }
-}
-
-export function toggleVisibility() {
-  return { type: TOGGLE_VISIBILITY }
 }

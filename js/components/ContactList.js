@@ -4,66 +4,44 @@
  */
 
 import React, { Component } from 'react'
-import { ListView, StyleSheet } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import ContactCell from 'ContactCell'
+import type { Contact } from '../reducers/contacts'
+import EmptyList from 'EmptyList';
+
+import { connect } from 'react-redux'
+import { getContacts, toggleContact } from '../actions'
 
 type Props = {
-  data: Array<String>
+  contacts: Array<Contact>,
+  getContacts: () => void,
+  onContactClick: (id: string) => void
 }
 
-type State = {
-  dataSource: Object
-}
-
-class ContactList extends Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
-    this.state = {
-      dataSource: ds.cloneWithRows(this.props.data)
-    }
+class ContactList extends Component<Props> {
+  componentDidMount() {
+    this.props.getContacts()
   }
+
+  _keyExtractor = (item: Contact) => item.recordID;
+
+  _renderItem = ({ item }: { item: Contact }) => (
+    <ContactCell contact={item} onClick={this.props.onContactClick} />
+  )
+
+  _renderEmptyList = () => <EmptyList isLoading={ !Array.isArray(this.props.contacts) } />;
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={() => <ContactCell name="Johnson" number="12345678" />}
+      <FlatList
+        data={this.props.contacts}
+        renderItem={this._renderItem}
+        ListEmptyComponent={this._renderEmptyList}
+        initialNumToRender={10}
+        keyExtractor={this._keyExtractor}
       />
     )
   }
 }
-
-const getVisibleContacts = (contacts, filter) => {
-  switch (filter) {
-    case 'SHOW_SELECTED':
-      return contacts.filter
-    case 'SHOW_ALL':
-    default:
-      return contacts
-  }
-}
-
-const mapStateToProps = state => {
-  return {
-    contacts: getVisibleContacts(state.todos, state.visibilityFilter)
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onContactClick: id => {
-      dispatch(toggleContact(id))
-    }
-  }
-}
-
-
-// const ContactList = ({ contacts, onCheckBoxClick }) => (
-//   <ListView
-//     dataSource={contacts}
-//     renderRow={() => <ContactCell name="Johnson" number="123456" onCheckBoxClick={onCheckBoxClick} /> }
-//   />
-// )
 
 export default ContactList

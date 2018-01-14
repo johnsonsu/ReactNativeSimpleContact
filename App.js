@@ -5,20 +5,15 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import VisibleContactList from 'VisibleContactList'
+import AppStateController from 'AppStateController'
+import VisibilityCheckBox from 'VisibilityCheckBox'
+import Header from 'Header'
 
-// export default class App extends Component<{}> {
-//   render() {
-//
-//     return (
-//       <View style={styles.container}>
-//         <ContactsListView data={['a', 'b', 'c', 'd']} />
-//       </View>
-//     )
-//   }
-// }
 const App = () => (
   <View style={styles.container}>
-    <VisibleContactList contacts={['a', 'b', 'c', 'd']} />
+    <Header title="Contacts" />
+    <VisibilityCheckBox />
+    <VisibleContactList />
   </View>
 )
 
