@@ -5,13 +5,15 @@
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import VisibleContactList from 'VisibleContactList'
-import AppStateController from 'AppStateController'
 import VisibilityCheckBox from 'VisibilityCheckBox'
+import AddContactTextInput from 'AddContactTextInput'
+
 import Header from 'Header'
 
 const App = () => (
   <View style={styles.container}>
     <Header title="Contacts" />
+    <AddContactTextInput />
     <VisibilityCheckBox />
     <VisibleContactList />
   </View>

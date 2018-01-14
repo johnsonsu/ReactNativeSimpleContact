@@ -4,7 +4,7 @@
 
 import {
   GET_CONTACTS_SUCCESS,
-  TOGGLE_CHECKBOX,
+  TOGGLE_CHECKBOX
 } from '../actions/actionTypes'
 import type { Action } from '../actions/actionTypes'
 

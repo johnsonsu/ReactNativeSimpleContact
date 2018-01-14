@@ -15,6 +15,7 @@ export type Action =
   | { type: 'GET_CONTACTS_SUCCESS', contacts: Array<Contact> }
   | { type: 'TOGGLE_CHECKBOX', id: string }
   | { type: 'TOGGLE_HIDE_UNSELECTED' }
+  | { type: 'ADD_CONTACT', name: string }
 export type Dispatch = (action: Action | ThunkAction | Array<Action>) => any
 export type GetState = () => Object
 export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any

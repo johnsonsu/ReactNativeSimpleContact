@@ -9,7 +9,7 @@ import {
   GET_CONTACTS,
   GET_CONTACTS_SUCCESS,
   TOGGLE_CHECKBOX,
-  TOGGLE_VISIBILITY
+  ADD_CONTACT
 } from './actionTypes'
 
 export function getContacts(): ThunkAction {
@@ -21,7 +21,7 @@ export function getContacts(): ThunkAction {
       if (err === 'denied') {
         console.warn('contact access denied.')
       } else {
-        dispatch(getContactsSuccess(contacts))
+        dispatch(getContactsSuccess(contacts.reverse()))
       }
     })
   }
@@ -34,9 +34,25 @@ function getContactsSuccess(contacts: Array<Contact>): Action {
   }
 }
 
-export function toggleContact(id: String): Action {
+export function toggleContact(id: string): Action {
   return {
     type: TOGGLE_CHECKBOX,
     id
+  }
+}
+
+export function addContact(name: string): ThunkAction {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ADD_CONTACT,
+      name
+    })
+    let newContact = {
+      givenName: name
+    }
+    Contacts.addContact(newContact, (err) => {
+      console.log('failed adding contact', err)
+    })
+    dispatch(getContacts())
   }
 }
