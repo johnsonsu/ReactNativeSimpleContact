@@ -34,6 +34,7 @@ class AddContactTextInput extends Component<Props, State> {
           }}
           placeholder="Add Contact"
           returnKeyType="done"
+          underlineColorAndroid="transparent"
         />
       </View>
     )
@@ -50,7 +51,8 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: 'white',
     borderRadius: 15,
-    textAlign: 'center'
+    textAlign: 'center',
+    padding: 0,
   }
 })
 
